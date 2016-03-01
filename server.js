@@ -20,11 +20,12 @@ app.get('/', (request, response) => {
 });
 
 app.post('/pizzas', (request, response) => {
+  if (!request.body.pizza) { return response.sendStatus(400); }
   var id = generateId();
 
-  app.locals.pizzas[id] = request.body;
+  app.locals.pizzas[id] = request.body.pizza;
 
-  response.sendStatus(201);
+  response.redirect('/pizzas/' + id);
 });
 
 app.use(bodyParser.json());
@@ -34,5 +35,11 @@ if (!module.parent) {
     console.log(`${app.locals.title} is running on ${app.get('port')}.`);
   });
 }
+
+app.get('/pizzas/:id', (request, response) => {
+  var pizza = app.locals.pizzas[request.params.id];
+
+  response.render('pizza', { pizza: pizza });
+});
 
 module.exports = app;
