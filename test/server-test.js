@@ -120,6 +120,8 @@ describe('Server', () => {
         this.request.post('/pizzas', { form: payload }, (error, response) => {
           if (error) { done(error); }
           var newPizzaId = Object.keys(app.locals.pizzas)[0];
+          console.log('in TEST', newPizzaId, response, request);
+
           assert.equal(response.headers.location, '/pizzas/' + newPizzaId);
           done();
         });
