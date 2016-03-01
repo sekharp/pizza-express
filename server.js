@@ -27,13 +27,11 @@ app.post('/pizzas', (request, response) => {
   var id = generateId();
 
   app.locals.pizzas[id] = request.body.pizza;
-  console.log('IN POST', id);
   response.redirect('/pizzas/' + id);
 });
 
 app.get('/pizzas/:id', (request, response) => {
   var pizza = app.locals.pizzas[request.params.id];
-  console.log('IN GET /PIZZAS/ID', request.params.id);
   response.render('pizza', { pizza: pizza });
 });
 
